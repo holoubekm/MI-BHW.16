@@ -2,47 +2,31 @@
 ## Problémy a algoritmy
 ### CTU / ČVUT FIT
 
-#### Task 1 - Differential power analysis
-#### Task 2 - Implementation of PRESENT cipher for ATmega163
-#### Task 3 - Implementation of EC over GF(p) for Arduino
-Task was to implement operations necessary to add two point on the given Elliptic Curve. Implemented is custom fixed length arithmetic over the GF(p). Furthermore the Montgomery domain is implemented to speed-up computation efficiently avoiding the multiplicative inversion.
+#### Task 1 - naive and aproximative Knapsack solver
+We were implementing a naive and slightly improved aproximative solution using heuristic for the Knapsack problem. The main goal was to measure error of the approximative solution. The results contains graphs and the final report.
 
-##### How to modify
-```
-# Due to memory limitation all computation is done in fixed length arithmetic
-# Please change the following values in poly.h to according your needs
-#define BYTES_CNT 10
-#define BITS_CNT 80
-#define PRIME_BITS 80
+Solution can be compiled using `GNU make` on Linux and `Visual Studio` on Windows.
 
-# The prime number used as a modulus can be changed in ECinit in the ec.cpp
+#### Task 2 - dynamic decomposition and FPTAS Knapsack solver
+In the second part we took an advantage of previous one - another improvement was implementation of `branch and bounds` prunning. This approach effectively removes states which would never lead to a better solution that the current.
 
-```
+Another approach we implemented was `dynamic decomposition` and `fast polynomial-time approximation scheme` (`FPTAS`).
 
-The program waits for user input, then adds those two points and waits in an endless loop.
+This version can be compiler only using the `GNU make`.
 
-**Warning:** there is not check whether points lie on the curve!
+#### Task 3 - eomparison of methods 
+We took previously programmed solver on the Knapsack problem and let it crush a lot of different instances. The basic difference was that results depend on the instance properties.
 
-##### How to compile and run
-You can use Arduino IDE to compile solution in this folder and use it to flash it to the Arduino.
+Folder contains the final report as well as graphs and exact runtimes.
 
-#### Task 4 - Implementation of Diffie - Hellman over EC(GF(p)) for Arduino
-This is an extension of previous task. Now the user is asked to insert a point `P` and number `n`, then the `Y = nP` is computed and printed over serial line.
+#### Task 4 - evolution algorithm Knapsack solver
+The last algorithm trying to solve the Knapsack problem was evolutin algorithm. As this is random algorithm results may (and will) change over time. 
 
-##### How to modify
-```
-# Due to memory limitation all computation is done in fixed length arithmetic
-# Please change the following values in poly.h to according your needs
-#define BYTES_CNT 10
-#define BITS_CNT 80
-#define PRIME_BITS 80
+The solution was created for the `Visual Studio`
 
-# The prime number used as a modulus can be changed in ECinit in the ec.cpp
-```
+#### Semestral work - evolution algorithm 3SAT solver
+Our semestral work was focused on 3SAT problem. We took an advantage of previous experience with evolution programming. I was enough to copy solution of the 4th task and bend it. I had changed problem representation in the genom and added another parameter tuning features. My approach was to use parameter grid, when we iterate over each parameter's value until all parameter space is exhausted.
 
-The program waits for user input, then adds point `P` `n` times with itself and waits in an endless loop.
+The final report describing my approach, overall quality and results is in the place.
 
-**Warning:** there is not check whether points lie on the curve!
-
-##### How to compile and run
-You can use Arduino IDE to compile solution in this folder and use it to flash it to the Arduino.
+Unfortunately this approach was not **fully appreciated** during the evaluation. **You have been warned!** 
