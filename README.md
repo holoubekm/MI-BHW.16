@@ -1,32 +1,51 @@
-# MI-PAA Course
-## Problémy a algoritmy
+# MI-BHW.16 Course
+## Bezpečnost hardwaru
 ### CTU / ČVUT FIT
 
-#### Task 1 - naive and aproximative Knapsack solver
-We were implementing a naive and slightly improved aproximative solution using heuristic for the Knapsack problem. The main goal was to measure error of the approximative solution. The results contains graphs and the final report.
+#### Task 1 - DPA - differential power analysis
+The first task was similar to the one from the MI-HWB course. We were operating with oscilloscopes measuring power consumption of a small java card device. This java card was encrypting accepted data using AES with an unknown hardcoded key. Our task was to break the cipher and get the key providing plain and corresponding cipher texts.
 
-Solution can be compiled using `GNU make` on Linux and `Visual Studio` on Windows.
+Power analysis takes an advantage from correlation analysis of power consumption measurements. The attack exploits biases varying power consumption of microprocessors or other hardware while performing operations using secret keys.
 
-#### Task 2 - dynamic decomposition and FPTAS Knapsack solver
-In the second part we took an advantage of previous one - another improvement was implementation of `branch and bounds` prunning. This approach effectively removes states which would never lead to a better solution that the current.
+You can find `Matlab` and `GNU Octave` source codes in the directory.
 
-Another approach we implemented was `dynamic decomposition` and `fast polynomial-time approximation scheme` (`FPTAS`).
+#### Task 2 - implementation of the PRESENT cipher
+My assignment was to implement the PRESETNT cipher for AVR with atmega163 CPU. The destination device was a simple AVR-based card controlled by sending signals using USB client application.
 
-This version can be compiler only using the `GNU make`.
+Actual implementation was inspired by an open-source implementation taken from the github. It takes place in the `example_PRESENT.c` file. You can change the hardcoded key in `crypt.h`.
 
-#### Task 3 - eomparison of methods 
-We took previously programmed solver on the Knapsack problem and let it crush a lot of different instances. The basic difference was that results depend on the instance properties.
+To build a solution please use `AVR studio` and proceed as usually.
+##### How to run
+1. Using the AVR studio build the project
+2. Flash the output
+3. Connect the card to a computer using the Java Smart Card client
+4. Call the encryption method via: `CLA: 0x80` and `INS: 0x60`
 
-Folder contains the final report as well as graphs and exact runtimes.
+#### Task 3 - implementation of poin addition over Elliptic curve over GF(p)
+My task task to implement Elliptic curve operations necessary for adding two points. Prior to that I had to implement `GF(p)` operations such as `addition`, `multiplication`, `inversion` and `comparison`. Every result of each operation is a residual of division with prime number as a modulus. I have implemented operation over `Montgomery domain` as well. Montgomety domain is a special domain created to avoid inversion as the most expensive operation in terms of runtime.
 
-#### Task 4 - evolution algorithm Knapsack solver
-The last algorithm trying to solve the Knapsack problem was evolutin algorithm. As this is random algorithm results may (and will) change over time. 
+All operations are done in fixed length arighmetics - to change the length change the following lines in `poly.h`:
+```c
+#define BYTES_CNT 10
+#define BITS_CNT 80
+```
 
-The solution was created for the `Visual Studio`
+The prime number can be set in the function `ECinit` `ec.cpp`.
 
-#### Semestral work - evolution algorithm 3SAT solver
-Our semestral work was focused on 3SAT problem. We took an advantage of previous experience with evolution programming. I was enough to copy solution of the 4th task and bend it. I had changed problem representation in the genom and added another parameter tuning features. My approach was to use parameter grid, when we iterate over each parameter's value until all parameter space is exhausted.
+##### How to run
+1. Using the Arduino IDE build and flash Arduino
+2. Connect the device via serial port and wait for instructions
+3. Output of the point addition should be sent back
 
-The final report describing my approach, overall quality and results is in the place.
+#### Task 4 - implementation of Diffie - Hellman over EC(GF(p))
+This task was an extension over the previous one. I had to implementan addition operations allowing user to compute scalar sum of the chosen point `A = n*K`.
 
-Unfortunately this approach was not **fully appreciated** during the evaluation. **You have been warned!** 
+To speed up processing on such a lowend device arduino is I incorporated the `double and add` algorithm. It is very similar to the well-known `square and multiply` algo.
+
+The rest is very similar to the previous task.
+
+
+##### How to run
+1. Using the Arduino IDE build and flash Arduino
+2. Connect the device via serial port and wait for instructions
+3. Output of the point addition should be sent back
